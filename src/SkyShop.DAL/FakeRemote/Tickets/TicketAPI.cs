@@ -4,11 +4,12 @@ using SkyShop.DAL.FakeRemote.DTOs;
 
 namespace SkyShop.DAL.FakeRemote.Tickets;
 
-public class TicketAPI
+public class TicketAPI(JsonSerializerOptions options)
 {
-    public static ImmutableList<TicketDTO> GetTickets()
+    private readonly JsonSerializerOptions _options = options;
+    public ImmutableList<TicketDTO> GetTickets()
     {
-        var tickets = File.ReadAllText("TicketSource.json");
-        return JsonSerializer.Deserialize<List<TicketDTO>>(tickets)?.ToImmutableList() ?? [];
+        var tickets = File.ReadAllText("D:\\projects\\SkyShop\\src\\SkyShop.DAL\\FakeRemote\\Tickets\\TicketSource.json");
+        return JsonSerializer.Deserialize<List<TicketDTO>>(tickets, _options)?.ToImmutableList() ?? [];
     }
 }

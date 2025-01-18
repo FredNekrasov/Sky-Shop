@@ -4,11 +4,12 @@ using System.Text.Json;
 
 namespace SkyShop.DAL.FakeRemote.Attractions;
 
-public class AttractionsAPI
+public class AttractionsAPI(JsonSerializerOptions options)
 {
-    public static ImmutableList<AttractionDTO> GetAttractions()
+    private readonly JsonSerializerOptions _options = options;
+    public ImmutableList<AttractionDTO> GetAttractions()
     {
-        var attractions = File.ReadAllText("AttractionsSource.json");
-        return JsonSerializer.Deserialize<List<AttractionDTO>>(attractions)?.ToImmutableList() ?? [];
+        var attractions = File.ReadAllText("D:\\projects\\SkyShop\\src\\SkyShop.DAL\\FakeRemote\\Attractions\\AttractionsSource.json");
+        return JsonSerializer.Deserialize<List<AttractionDTO>>(attractions, _options)?.ToImmutableList() ?? [];
     }
 }
